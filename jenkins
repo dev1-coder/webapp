@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    
+    environment {
+        SCANNER_HOME = tool 'SonarQubeScanner'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                    https://github.com/dev1-coder/webapp.git
+                checkout scm
+            }
+        }
+        
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv('http://3.93.236.7:9000/') {
+                        // Run SonarQube analysis
+                        sh "${SCANNER_HOME}/bin/sonar-scanner"
+                    }
+                }
+            }
+        }
+    }
+}
